@@ -22,10 +22,10 @@ db.on("close", () => console.log("mongo disconnected"));
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use("/products", products );
-// Allow requests from the frontend domain
-app.use(cors());
+
 
 // root route
 app.get("/", (req, res) => {
