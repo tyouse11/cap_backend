@@ -1,7 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import products from "./routes/products.mjs"
+import products from "./routes/products.mjs";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -23,12 +24,18 @@ const app = express();
 
 app.use(express.json());
 app.use("/products", products );
+// Allow requests from the frontend domain
+app.use(cors());
 
 // root route
 app.get("/", (req, res) => {
     res.send("Welcome to the API");
 });
 
+// Global error handling
+app.use((err, _req, res, next) => {
+    res.status(500).send("Seems like we messed up somewhere...");
+  });
 
 // Start the Express server
 app.listen(PORT, () => {
