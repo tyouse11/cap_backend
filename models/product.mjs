@@ -4,8 +4,9 @@ const model = mongoose.model;
 
 const productSchema = new Schema(
     {
-        id: { type: String, required: true },
-        title: { type: String, required: true },
+        _id: { type: String, required: true },
+        name: { type: String, required: true },
+        breed: { type: String, required: true },
         price: { type: Number, required: true },
         imageUrl: { type: String, required: true },
     }
