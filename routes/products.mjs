@@ -17,6 +17,14 @@ router.post('/insert-products', async (req, res) => {
   }
 });
 
+router.post('/place-order', (req, res) => {
+  const orderData = req.body;
+
+  console.log('Received order:', orderData);
+
+  res.status(200).json({ message: 'Order placed successfully' });
+});
+
 // Find all products
 router.get('/', async (req, res) => {
   try {
