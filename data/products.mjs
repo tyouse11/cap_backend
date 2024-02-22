@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 // Data for puppies products
 
 let products = [
@@ -50,12 +48,6 @@ let products = [
         breed: "Pit Bull",
         price: "900",
         imageUrl: "https://www.thesprucepets.com/thmb/hIu5ILV9RYci7sXOtF17OsXWQHA=/3054x0/filters:no_upscale():strip_icc()/dog-breeds-with-blue-eyes-5089039-10-b6fa574c3463402db3389e2e048d43e4.jpg",
-    },
-    {
-        name: "Nixon",
-        breed: "Dalmatian",
-        price: "900",
-        imageUrl: "https://t3.ftcdn.net/jpg/04/00/74/58/360_F_400745828_vFQ4dbW8BIswnPIEZmnNI7Ch7163xvNi.jpg",
     },
     {
         name: "Avery",

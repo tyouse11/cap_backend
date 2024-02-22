@@ -12,7 +12,7 @@ router.post('/insert-products', async (req, res) => {
 
     if (existingProducts.length > 0) {
       // Products already exist, return a message indicating that insertion is not needed
-      return res.status(200).json({ message: "Products already inserted" });
+      return res.status(200).json({ message: "Pups already inserted" });
     }
 
     // Insert products only if they don't exist already
@@ -29,10 +29,8 @@ router.post("/", async (req, res) => {
   try {
     const { name, breed, price, imageUrl } = req.body;
 
-    // Create a new product document
+    // Create a new product document and save it
     const newProduct = new Product( { name, breed, price, imageUrl });
-
-    // Save the new product to the database
     await newProduct.save();
 
     res.status(201).json(newProduct);
