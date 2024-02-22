@@ -1,6 +1,4 @@
 import express from "express";
-import db from "../db/conn.mjs";
-import { ObjectId } from "mongodb"; // comes from MongoDB library
 import Product from '../models/product.mjs';
 import products from "../data/products.mjs";
 
@@ -9,13 +7,40 @@ const router = express.Router();
 // Insert Products Data into MongoDB
 router.post('/insert-products', async (req, res) => {
   try {
-      const result = await Product.insertMany(products);
-      res.status(201).json(result);
+    // Check if products already exist in the database
+    const existingProducts = await Product.find();
+
+    if (existingProducts.length > 0) {
+      // Products already exist, return a message indicating that insertion is not needed
+      return res.status(200).json({ message: "Products already inserted" });
+    }
+
+    // Insert products only if they don't exist already
+    const result = await Product.insertMany(products);
+    res.status(201).json(result);
   } catch (error) {
-      console.error(error);
-      res.status(500).send("Internal Server Error");
+    console.error(error);
+    res.status(500).send("Unable to Add Pups");
   }
 });
+
+// Route to add a single new product
+router.post("/", async (req, res) => {
+  try {
+    const { name, breed, price, imageUrl } = req.body;
+
+    // Create a new product document
+    const newProduct = new Product( { name, breed, price, imageUrl });
+
+    // Save the new product to the database
+    await newProduct.save();
+
+    res.status(201).json(newProduct);
+  } catch (error) {
+    console.error("Error adding pup: ", error );
+    res.status(500).json( { error: "Error Adding Pup" } )
+  }
+})
 
 router.post('/place-order', (req, res) => {
   const orderData = req.body;
@@ -34,7 +59,7 @@ router.get('/', async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Unable to Find Pups" });
   }
 });
 
@@ -68,21 +93,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Define route to add a new product
-router.post("/", async (req, res) => {
-    try {
-      const { name, breed, price, imageUrl } = req.body;
-      // Create a new product document
-      const newProduct = new Product({ name, breed, price, imageUrl });
-      // Save the product to the database
-      await newProduct.save();
-      res.status(201).json(newProduct);
-    } catch (error) {
-      console.error("Error adding product:", error);
-      res.status(500).json({ error: "Internal server error" });
-    }
-  });
-
   // Update a product by ID
 router.put("/:id", async (req, res) => {
   try {
@@ -93,13 +103,13 @@ router.put("/:id", async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(productId, { name, breed, price, imageUrl }, { new: true });
 
     if (!updatedProduct) {
-      return res.status(404).json({ error: "Product not found" });
+      return res.status(404).json({ error: "Pup not found" });
     }
 
     res.status(200).json(updatedProduct);
   } catch (error) {
     console.error("Error updating product:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Error Updating Pup" });
   }
 });
 

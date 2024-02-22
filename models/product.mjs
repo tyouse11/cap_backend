@@ -4,7 +4,6 @@ const model = mongoose.model;
 
 const productSchema = new Schema(
     {
-        _id: { type: String, required: true },
         name: { type: String, required: true },
         breed: { type: String, required: true },
         price: { type: Number, required: true },
@@ -13,5 +12,4 @@ const productSchema = new Schema(
 )
 const Product = model("Product", productSchema);
 
-// make exportable to be accessed in index.mjs
 export default Product;

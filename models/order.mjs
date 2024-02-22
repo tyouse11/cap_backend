@@ -11,5 +11,4 @@ const orderSchema = new Schema(
 )
 const Order = model("Order", orderSchema);
 
-// make exportable to be accessed in index.mjs
 export default Order;

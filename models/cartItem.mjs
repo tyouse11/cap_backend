@@ -11,5 +11,4 @@ const cartItemSchema = new Schema(
 )
 const CartItem = model("CartItem", cartItemSchema);
 
-// make exportable to be accessed in index.mjs
 export default CartItem;

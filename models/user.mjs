@@ -11,5 +11,4 @@ const userSchema = new Schema(
 )
 const user = model("user", userSchema);
 
-// make exportable to be accessed in index.mjs
 export default user;
